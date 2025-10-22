@@ -32,6 +32,8 @@ curl -o .claude/skills/claudeisms/SKILL.md https://raw.githubusercontent.com/jef
 Tell Claude:
 > "Use the Claudeisms skill from https://github.com/jeffersonwarrior/claudisms"
 
+Note: Claude cannot directly install skills from URLs. Use Option 1 or 2 first.
+
 ## Usage
 
 Once installed, restart Claude Code. The skill automatically activates when relevant to tasks.
