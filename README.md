@@ -19,6 +19,7 @@ Claudeisms enforces consistent, efficient AI behavior through:
 ### Option 1: Clone Repository
 ```bash
 git clone https://github.com/jeffersonwarrior/claudisms.git && cd claudeisms
+# Restart Claude Code - skill automatically available
 ```
 
 ### Option 2: Add to Existing Project
