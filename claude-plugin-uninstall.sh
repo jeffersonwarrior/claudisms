@@ -9,6 +9,8 @@ PLUGINS_DIR="$CLAUDE_DIR/plugins"
 INSTALLED_PLUGINS_FILE="$PLUGINS_DIR/installed_plugins.json"
 KNOWN_MARKETPLACES_FILE="$PLUGINS_DIR/known_marketplaces.json"
 MARKETPLACES_DIR="$PLUGINS_DIR/marketplaces"
+SETTINGS_FILE="$CLAUDE_DIR/settings.json"
+SETTINGS_LOCAL_FILE="$CLAUDE_DIR/settings.local.json"
 
 echo "🧹 Claude Code Plugin Uninstaller"
 echo "=================================="
@@ -29,6 +31,12 @@ if [ -f "$INSTALLED_PLUGINS_FILE" ]; then
 fi
 if [ -f "$KNOWN_MARKETPLACES_FILE" ]; then
     cp "$KNOWN_MARKETPLACES_FILE" "$BACKUP_DIR/"
+fi
+if [ -f "$SETTINGS_FILE" ]; then
+    cp "$SETTINGS_FILE" "$BACKUP_DIR/"
+fi
+if [ -f "$SETTINGS_LOCAL_FILE" ]; then
+    cp "$SETTINGS_LOCAL_FILE" "$BACKUP_DIR/"
 fi
 if [ -d "$MARKETPLACES_DIR" ]; then
     cp -r "$MARKETPLACES_DIR" "$BACKUP_DIR/" 2>/dev/null || true
@@ -114,6 +122,32 @@ if [ "$1" = "--all" ]; then
         echo "✅ Removed all marketplace directories"
     fi
 
+    # Clean settings.json enabledPlugins
+    if [ -f "$SETTINGS_FILE" ]; then
+        python3 -c "
+import json
+with open('$SETTINGS_FILE', 'r') as f:
+    data = json.load(f)
+if 'enabledPlugins' in data:
+    data['enabledPlugins'] = {}
+with open('$SETTINGS_FILE', 'w') as f:
+    json.dump(data, f, indent=2)
+" 2>/dev/null && echo "✅ Cleaned settings.json"
+    fi
+
+    # Clean settings.local.json enabledPlugins
+    if [ -f "$SETTINGS_LOCAL_FILE" ]; then
+        python3 -c "
+import json
+with open('$SETTINGS_LOCAL_FILE', 'r') as f:
+    data = json.load(f)
+if 'enabledPlugins' in data:
+    data['enabledPlugins'] = {}
+with open('$SETTINGS_LOCAL_FILE', 'w') as f:
+    json.dump(data, f, indent=2)
+" 2>/dev/null && echo "✅ Cleaned settings.local.json"
+    fi
+
     echo ""
     echo "✅ All plugins removed successfully!"
     echo "📦 Backup saved at: $BACKUP_DIR"
@@ -176,6 +210,34 @@ if [ -d "$MARKETPLACES_DIR/$MARKETPLACE_NAME" ]; then
         rm -rf "$MARKETPLACES_DIR/$MARKETPLACE_NAME"
         echo "✅ Removed marketplace directory"
     fi
+fi
+
+# Remove from settings.json enabledPlugins
+if [ -f "$SETTINGS_FILE" ]; then
+    python3 -c "
+import json
+with open('$SETTINGS_FILE', 'r') as f:
+    data = json.load(f)
+if 'enabledPlugins' in data and '$PLUGIN_NAME' in data['enabledPlugins']:
+    del data['enabledPlugins']['$PLUGIN_NAME']
+    with open('$SETTINGS_FILE', 'w') as f:
+        json.dump(data, f, indent=2)
+    print('✅ Removed from settings.json')
+" 2>/dev/null || true
+fi
+
+# Remove from settings.local.json enabledPlugins
+if [ -f "$SETTINGS_LOCAL_FILE" ]; then
+    python3 -c "
+import json
+with open('$SETTINGS_LOCAL_FILE', 'r') as f:
+    data = json.load(f)
+if 'enabledPlugins' in data and '$PLUGIN_NAME' in data['enabledPlugins']:
+    del data['enabledPlugins']['$PLUGIN_NAME']
+    with open('$SETTINGS_LOCAL_FILE', 'w') as f:
+        json.dump(data, f, indent=2)
+    print('✅ Removed from settings.local.json')
+" 2>/dev/null || true
 fi
 
 echo ""
