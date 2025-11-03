@@ -1,10 +1,22 @@
 {
   "name": "claudeisms",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation",
   "author": {
     "name": "Jefferson Warrior",
     "github": "https://github.com/jeffersonwarrior"
   },
-  "hooks": "./hooks.json"
+  "hooks": "./hooks.json",
+  "commands": [
+    {
+      "name": "claudisms-settings",
+      "description": "Manage Claudisms plugin settings",
+      "script": "./commands/claudisms-settings.sh"
+    },
+    {
+      "name": "claudisms-reload",
+      "description": "Reload Claudisms settings without restarting session",
+      "script": "./commands/claudisms-reload.sh"
+    }
+  ]
 }
