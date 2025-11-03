@@ -136,6 +136,27 @@ GPL v3
 
 ---
 
+## Uninstallation
+
+Removing the plugin from the marketplace does not clean up all configuration. Use the included uninstaller script:
+
+```bash
+# Remove this plugin
+~/claudisms/claude-plugin-uninstall.sh claudeisms@claudisms
+
+# Remove all plugins
+~/claudisms/claude-plugin-uninstall.sh --all
+
+# Check plugin status
+~/claudisms/claude-plugin-uninstall.sh
+```
+
+The uninstaller:
+- Creates automatic backups before removal
+- Cleans `~/.claude/plugins/installed_plugins.json`
+- Removes plugin files from `~/.claude/plugins/marketplaces/`
+- Detects and reports broken plugins (missing files)
+
 ## Troubleshooting
 
 **Marketplace naming:** Use `jeffersonwarrior/claudisms` when adding. Plugin name is `claudeisms`, marketplace is `claudisms`, settings show `claudeisms@claudisms` - this is correct.
