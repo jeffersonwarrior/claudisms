@@ -1,6 +1,6 @@
 {
   "name": "claudeisms",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation",
   "author": {
     "name": "Jefferson Warrior",
