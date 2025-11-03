@@ -3,6 +3,14 @@
 # Claudisms Settings Manager
 # Slash command for managing Claudisms plugin settings
 
+# Locate plugin root (prefer installed marketplace location)
+if [[ -d ~/.claude/plugins/marketplaces/claudisms ]]; then
+  CLAUDE_PLUGIN_ROOT=~/.claude/plugins/marketplaces/claudisms
+elif [[ -z "${CLAUDE_PLUGIN_ROOT}" ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  CLAUDE_PLUGIN_ROOT="$(dirname "$SCRIPT_DIR")"
+fi
+
 # Locate settings file
 SETTINGS_FILE="${CLAUDE_PLUGIN_ROOT}/.claudisms-settings"
 LIB_DIR="${CLAUDE_PLUGIN_ROOT}/lib"

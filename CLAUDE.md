@@ -99,3 +99,5 @@ Current schema (v2.0.0+):
 - Reuse working scripts instead of recreating
 - No emoji, no pleasantries
 - Current versions only
+- Use `fd` or `rg` (ripgrep) instead of `find` or `grep` when available
+- Recommend installation if `fd` or `rg` not available
