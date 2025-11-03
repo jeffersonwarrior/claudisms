@@ -15,15 +15,22 @@ Claude Code plugin enforcing operational guidelines and terse responses.
 
 ## Installation
 
+### Via Claude Code Marketplace (Recommended)
+
+1. Run `/plugin` in Claude Code
+2. Add marketplace: `jeffersonwarrior/claudisms`
+3. Install the plugin
+4. Restart Claude Code
+5. Enable hooks when prompted
+
+### Manual Installation
+
 ```bash
 cd ~/.claude/plugins
 git clone https://github.com/jeffersonwarrior/claudisms.git
 ```
 
-**Enable hooks**:
-1. Restart Claude Code
-2. Settings → Plugins → Claudisms
-3. Enable hooks when prompted
+Then restart Claude Code and enable hooks in Settings → Plugins → Claudisms
 
 ## Hooks
 
