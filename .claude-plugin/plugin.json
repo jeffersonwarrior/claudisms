@@ -6,5 +6,5 @@
     "name": "Jefferson Warrior",
     "github": "https://github.com/jeffersonwarrior"
   },
-  "hooks": "../../hooks.json"
+  "hooks": "./hooks.json"
 }
