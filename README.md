@@ -1,62 +1,48 @@
 # Claudeisms
 
-Operational guidelines skill for Claude Code that establishes strict protocols for AI task execution.
+Claude Code plugin enforcing operational guidelines and terse responses.
 
-## What It Does
+## Features
 
-Claudeisms enforces consistent, efficient AI behavior through:
-
-- Sequential task execution (no "weeks", just numerical order)
-- Terse, minimal responses
+- Terse, code-first responses (1-2 sentences max)
+- Sequential execution protocols
 - No destructive operations without confirmation
-- Mandatory testing after all tasks
-- Script reuse over writing new ones
-- Rational complexity checks with user clarification
-- Root cause analysis after multiple revisits
+- Minimal documentation (200 words max for .md files)
+- Test after every task
+- RCA after 2+ revisits
+- No emoji, no production claims
+- Script reuse over recreation
 
 ## Installation
 
-### Option 1: Clone Repository
 ```bash
-git clone https://github.com/jeffersonwarrior/claudisms.git && \
-cd claudisms && \
-cp -r .claude/skills/claudeisms ~/.claude/skills/ && \
-cd .. && \
-rm -rf claudisms
-# Restart Claude Code completely - skills load at initialization
+cd ~/.claude/plugins
+git clone https://github.com/jeffersonwarrior/claudisms.git
 ```
 
-### Option 2: Add to Existing Project
-```bash
-mkdir -p .claude/skills/claudeisms
-curl -o .claude/skills/claudeisms/SKILL.md https://raw.githubusercontent.com/jeffersonwarrior/claudisms/main/.claude/skills/claudeisms/SKILL.md
-```
+Restart Claude Code to activate.
 
-### Option 3: Direct Claude Command
-Tell Claude:
-> "Use the Claudeisms skill from https://github.com/jeffersonwarrior/claudisms"
+## Hooks
 
-Note: Claude cannot directly install skills from URLs. Use Option 1 or 2 first.
-
-## Usage
-
-Once installed, restart Claude Code. The skill automatically activates when relevant to tasks.
-
-To explicitly invoke:
-> "Apply Claudeisms guidelines to this task"
+- **SessionStart**: Activates core guidelines
+- **BeforeToolUse(Write)**: Limits .md files to 200 words
 
 ## Core Principles
 
-- Sequential execution only
-- No cost considerations
-- Terse responses
-- No production claims
-- No emoji
-- Test everything
-- Reuse scripts
+- Sequential execution only - no weeks, numerical order
+- No cost considerations - AI handles everything
+- Terse responses - less is more
+- Test after every task
+- No database/folder deletion without confirmation
+- No production pushes without confirmation
+- Current versions only
 - Ask for clarification when irrational
 - Never blame user
-- RCA after multiple revisits
+- RCA after 2+ revisits
+
+## Author
+
+Jefferson Warrior - [GitHub](https://github.com/jeffersonwarrior)
 
 ## License
 

@@ -1,0 +1,10 @@
+{
+  "name": "claudeisms",
+  "version": "2.0.0",
+  "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation",
+  "author": {
+    "name": "Jefferson Warrior",
+    "github": "https://github.com/jeffersonwarrior"
+  },
+  "hooks": ["./hooks.json"]
+}
