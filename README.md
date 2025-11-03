@@ -67,4 +67,6 @@ GPL v3
 
 ## Troubleshooting
 
-**Marketplace naming confusion:** Use `jeffersonwarrior/claudisms` when adding the marketplace. The plugin name is `claudeisms` but marketplace name is `claudisms`, resulting in `claudeisms@claudisms` in settings - this is correct.
+**Marketplace naming:** Use `jeffersonwarrior/claudisms` when adding. Plugin name is `claudeisms`, marketplace is `claudisms`, settings show `claudeisms@claudisms` - this is correct.
+
+**Path requirements:** All manifest paths must start with `./` and resolve from plugin root. Example: `.claude-plugin/plugin.json` uses `"hooks": "./hooks.json"` not `"../../hooks.json"`.
