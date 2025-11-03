@@ -62,3 +62,9 @@ Jefferson Warrior - [GitHub](https://github.com/jeffersonwarrior)
 ## License
 
 GPL v3
+
+---
+
+## Troubleshooting
+
+**Marketplace naming confusion:** Use `jeffersonwarrior/claudisms` when adding the marketplace. The plugin name is `claudeisms` but marketplace name is `claudisms`, resulting in `claudeisms@claudisms` in settings - this is correct.
