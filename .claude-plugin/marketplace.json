@@ -1,15 +1,13 @@
 {
-  "owner": "jeffersonwarrior",
+  "name": "claudisms",
+  "owner": {
+    "name": "Jefferson Warrior"
+  },
   "plugins": [
     {
       "name": "claudeisms",
-      "displayName": "Claudeisms",
-      "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation",
-      "version": "2.0.0",
-      "repository": "https://github.com/jeffersonwarrior/claudisms.git",
-      "license": "GPL-3.0",
-      "categories": ["productivity", "guidelines"],
-      "tags": ["terse", "guidelines", "operational", "minimal"]
+      "source": ".",
+      "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation"
     }
   ]
 }
