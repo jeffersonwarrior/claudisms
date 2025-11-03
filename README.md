@@ -20,7 +20,10 @@ cd ~/.claude/plugins
 git clone https://github.com/jeffersonwarrior/claudisms.git
 ```
 
-Restart Claude Code to activate.
+**Enable hooks**:
+1. Restart Claude Code
+2. Settings → Plugins → Claudisms
+3. Enable hooks when prompted
 
 ## Hooks
 
