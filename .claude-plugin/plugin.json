@@ -6,5 +6,18 @@
     "name": "Jefferson Warrior",
     "github": "https://github.com/jeffersonwarrior"
   },
-  "hooks": ["./hooks.json"]
+  "hooks": {
+    "SessionStart": {
+      "handler": "./hooks-handlers/session-start.sh"
+    },
+    "BeforeToolUse(Write(file_path:**/*.md))": {
+      "handler": "./hooks-handlers/before-md-write.sh"
+    },
+    "BeforeToolUse(Write(file_path:**/*README*))": {
+      "handler": "./hooks-handlers/before-md-write.sh"
+    },
+    "BeforeToolUse(Write(file_path:**/*SETUP*))": {
+      "handler": "./hooks-handlers/before-md-write.sh"
+    }
+  }
 }
