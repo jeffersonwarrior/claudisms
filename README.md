@@ -20,8 +20,13 @@ Claude Code plugin enforcing operational guidelines and terse responses.
 1. Run `/plugin` in Claude Code
 2. Add marketplace: `jeffersonwarrior/claudisms`
 3. Install the plugin
-4. Restart Claude Code
-5. Enable hooks when prompted
+4. Add to `~/.claude/settings.local.json`:
+```json
+"enabledPlugins": {
+  "claudeisms@claudisms": true
+}
+```
+5. Restart Claude Code
 
 ### Manual Installation
 
