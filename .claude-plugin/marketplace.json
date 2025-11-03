@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "claudeisms",
-      "source": ".",
+      "source": "./",
       "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation"
     }
   ]
