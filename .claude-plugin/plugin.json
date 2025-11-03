@@ -8,15 +8,7 @@
   },
   "hooks": "./hooks.json",
   "commands": [
-    {
-      "name": "claudisms-settings",
-      "description": "Manage Claudisms plugin settings",
-      "script": "./commands/claudisms-settings.sh"
-    },
-    {
-      "name": "claudisms-reload",
-      "description": "Reload Claudisms settings without restarting session",
-      "script": "./commands/claudisms-reload.sh"
-    }
+    "./commands/claudisms-settings.md",
+    "./commands/claudisms-reload.md"
   ]
 }
