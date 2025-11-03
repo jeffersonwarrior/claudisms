@@ -1,5 +1,21 @@
 # Project Definition: Claudeisms
 
+Claude Code plugin enforcing operational guidelines.
+
+## Status
+
+**Working:** Plugin installed, enabled, hooks active (SessionStart firing)
+**Commit:** ae53ffa (latest)
+**Location:** ~/.claude/plugins/marketplaces/claudisms
+**Dev Repo:** /home/agent/claudisms
+
+## Recent Fixes (2025-11-03)
+
+Fixed marketplace installation validation errors:
+1. Converted deprecated `handler` format to new array-based hook schema
+2. Fixed path validation: `"hooks": "./hooks.json"` (must start with `./`, resolve from plugin root)
+3. Updated both manifests: `claude-plugin.json` + `.claude-plugin/plugin.json`
+
 ## Operational Guidelines
 
 ### Core Principles
