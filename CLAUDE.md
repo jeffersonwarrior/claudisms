@@ -103,3 +103,4 @@ Current schema (v2.0.0+):
 - Recommend installation if `fd` or `rg` not available
 - **Time estimates:** Use operation complexity (simple/moderate/complex) not human time units
 - **Subagents:** Use Task tool for multi-file searches; write concise descriptive prompts
+- **Primary solutions:** Implement the intended solution; workarounds only when explicitly blocked

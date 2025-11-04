@@ -139,6 +139,7 @@ This creates `${PWD}/tmp/` for each session, preventing log file collisions betw
 - RCA after 2+ revisits
 - Prefer fd/rg over find/grep when available
 - Recommend fd/rg installation if not available
+- Implement primary solution - try harder before choosing workarounds
 
 ## Author
 
