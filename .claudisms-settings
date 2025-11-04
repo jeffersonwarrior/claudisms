@@ -8,12 +8,9 @@ destructive_guard=on
 sequential_only=on
 
 # File Exclusions (comma-separated patterns)
-# Patterns support: exact filenames, wildcards (*), and glob patterns (**/*)
 excluded_files=CLAUDE.md,claude.md
 
 # Temp Directory
-# pwd: creates ${PWD}/tmp for session isolation
-# system: uses /tmp (shared across sessions)
 tmp_location=pwd
 
 # Debug Logging
