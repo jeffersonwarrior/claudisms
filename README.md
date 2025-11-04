@@ -21,12 +21,20 @@ Claude Code plugin enforcing operational guidelines and terse responses.
 1. Run `/plugin` in Claude Code
 2. Add marketplace: `jeffersonwarrior/claudisms`
 3. Install the plugin
-4. Enable in settings (or edit `~/.claude/settings.json`):
-```json
-"enabledPlugins": {
-  "claudeisms@claudisms": true
-}
+4. Restart Claude Code
+
+### Clean Install/Reinstall
+
+If experiencing issues or upgrading from a broken version:
+
+```bash
+cd ~/.claude/plugins/marketplaces
+git clone https://github.com/jeffersonwarrior/claudisms.git
+cd claudisms
+./clean-install.sh
 ```
+
+The script removes old installations, backs up settings, reinstalls the plugin, and restarts Claude Code.
 
 ### Manual Installation
 
