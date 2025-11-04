@@ -50,88 +50,64 @@ Then restart Claude Code and enable hooks in Settings → Plugins → Claudisms
 - **SessionStart**: Activates core guidelines
 - **BeforeToolUse(Write)**: Limits .md files to 200 words
 
-## Slash Commands
+## Configuration
 
-### Settings Management
+Plugin settings stored in `claudisms.json` at plugin root:
+
+```json
+{
+  "enabled": true,
+  "responseStyle": "terse",
+  "useCodeReferences": true,
+  "useSubagents": true,
+  "testAfterChanges": true,
+  "maxResponseLength": 2,
+  "avoidWorkarounds": true,
+  "requireConfirmationForDestructiveOps": true,
+  "requireConfirmationForProductionPush": true,
+  "preferCurrentVersions": true,
+  "performRCAAfterMultipleRevisits": true,
+  "reuseScripts": true,
+  "preferFdRg": true,
+  "noEmoji": true,
+  "noPleasantries": true
+}
+```
+
+### Settings Reference
+
+| Setting | Type | Default | Description |
+|---------|------|---------|-------------|
+| `enabled` | boolean | true | Master switch for plugin |
+| `responseStyle` | string | "terse" | Response verbosity ("terse" or "verbose") |
+| `useCodeReferences` | boolean | true | Include file:line references in responses |
+| `useSubagents` | boolean | true | Use Task tool for multi-file searches |
+| `testAfterChanges` | boolean | true | Run tests after code modifications |
+| `maxResponseLength` | number | 2 | Max sentences for simple tasks |
+| `avoidWorkarounds` | boolean | true | Implement primary solution first |
+| `requireConfirmationForDestructiveOps` | boolean | true | Confirm `rm -rf`, database deletes |
+| `requireConfirmationForProductionPush` | boolean | true | Confirm production deployments |
+| `preferCurrentVersions` | boolean | true | Use latest stable versions |
+| `performRCAAfterMultipleRevisits` | boolean | true | Root cause analysis after 2+ attempts |
+| `reuseScripts` | boolean | true | Reuse working scripts vs recreate |
+| `preferFdRg` | boolean | true | Use fd/rg over find/grep |
+| `noEmoji` | boolean | true | Disable emoji in responses |
+| `noPleasantries` | boolean | true | Skip greetings/confirmations |
+
+### Slash Commands
 
 **View current settings:**
 ```
 /claudisms-settings
 ```
 
-**Set individual settings:**
-```
-/claudisms-settings set terse_mode off
-/claudisms-settings set doc_limits exclude
-/claudisms-settings set tmp_location pwd
-```
-
-**Manage file exclusions:**
-```
-/claudisms-settings exclude "**/*PLANNING*.md"
-/claudisms-settings include CLAUDE.md
-```
-
-**Reload settings:**
+**Reload settings after manual edits:**
 ```
 /claudisms-reload
 ```
 
-**Show help:**
-```
-/claudisms-settings help
-```
+Settings location: `~/.claude/plugins/marketplaces/claudisms/claudisms.json` (marketplace) or `~/.claude/plugins/claudisms/claudisms.json` (manual install)
 
-### Settings Reference
-
-| Setting | Values | Description |
-|---------|--------|-------------|
-| `terse_mode` | on, off | **Terse responses:** Injects guidelines for 1-2 sentence responses, code-first output, no preamble |
-| `doc_limits` | on, off, exclude | **Documentation limits:** Enforces 200-word max on README/SETUP files. `off`=disabled, `on`=all files, `exclude`=uses `excluded_files` list |
-| `destructive_guard` | on, off, exclude | **Destructive operation protection:** Blocks `rm -rf`, `git push`, `DROP TABLE`, `DELETE FROM`, `TRUNCATE`. Requires user confirmation. `exclude`=uses pattern matching |
-| `sequential_only` | on, off | **Sequential execution:** Enforces numerical task ordering, no parallel execution or week-based planning |
-| `tmp_location` | pwd, system | **Log directory:** `pwd`=creates `${PWD}/tmp` for session isolation, `system`=uses `/tmp` (shared across sessions) |
-| `debug_logging` | on, off | **Debug mode:** Enables hook execution logs to `${tmp_location}/hook-env-*.log` files for troubleshooting |
-| `excluded_files` | patterns | **File exclusions:** Comma-separated patterns. Files matching these patterns bypass `doc_limits` hook. Example: `CLAUDE.md,**/*PLANNING*.md` |
-
-**How settings work:**
-
-Settings are stored in `.claudisms-settings` file (key=value format). Hooks read this file at execution time via `lib/settings-loader.sh`. Changes require `/claudisms-reload` or Claude Code restart to take effect.
-
-**Hook behavior:**
-- `doc_limits=on`: Hook injects 200-word limit context for all README/SETUP files
-- `doc_limits=off`: Hook exits silently (no context injection)
-- `doc_limits=exclude`: Hook checks `excluded_files` patterns, applies limit only to non-matching files
-- `destructive_guard=on`: Hook blocks destructive bash/SQL commands, requires user approval
-- All hooks respect `excluded_files` patterns for fine-grained control
-
-### Pattern Matching
-
-File exclusion patterns support:
-- **Exact match**: `CLAUDE.md` matches files ending with CLAUDE.md
-- **Wildcards**: `*.md` matches any .md file
-- **Recursive glob**: `**/*PLANNING*.md` matches PLANNING.md files in any subdirectory
-
-### Common Use Cases
-
-**Allow detailed documentation:**
-```
-/claudisms-settings set doc_limits off
-# Write detailed documentation
-/claudisms-settings set doc_limits on
-```
-
-**Exclude planning files from 200-word limit:**
-```
-/claudisms-settings exclude "PLANNING.md"
-/claudisms-settings set doc_limits exclude
-```
-
-**Enable session isolation:**
-```
-/claudisms-settings set tmp_location pwd
-```
-This creates `${PWD}/tmp/` for each session, preventing log file collisions between multiple Claude Code instances.
 
 ## Core Principles
 
