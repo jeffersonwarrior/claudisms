@@ -16,19 +16,29 @@ if [[ -d ~/.claude/plugins/claudisms ]]; then
   rm -rf ~/.claude/plugins/claudisms
 fi
 
-# 2. Ensure marketplace directory exists
-mkdir -p "$MARKETPLACE_DIR"
-
-# 3. Copy/update files from dev repo
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [[ -d "$SCRIPT_DIR" ]]; then
-  echo "✓ Syncing files from $SCRIPT_DIR..."
-  rsync -av --exclude='.git' --exclude='tmp/' "$SCRIPT_DIR/" "$MARKETPLACE_DIR/"
+# 2. Clean slate: remove existing marketplace directory
+if [[ -d "$MARKETPLACE_DIR" ]]; then
+  echo "✓ Removing existing marketplace directory..."
+  rm -rf "$MARKETPLACE_DIR"
 fi
 
-# 4. Fix marketplace.json naming conflict
-echo "✓ Fixing marketplace.json..."
-cat > "$MARKETPLACE_DIR/.claude-plugin/marketplace.json" << 'EOF'
+# 3. Create proper marketplace structure
+MARKETPLACE_ROOT="${HOME}/.claude/plugins/marketplaces/claudisms"
+PLUGIN_DIR="$MARKETPLACE_ROOT/claudisms"
+
+mkdir -p "$PLUGIN_DIR"
+
+# 4. Copy plugin files to plugin subdirectory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [[ -d "$SCRIPT_DIR" ]]; then
+  echo "✓ Syncing plugin files to $PLUGIN_DIR..."
+  rsync -av --exclude='.git' --exclude='tmp/' "$SCRIPT_DIR/" "$PLUGIN_DIR/"
+fi
+
+# 5. Create marketplace.json at marketplace root
+echo "✓ Creating marketplace.json at root..."
+mkdir -p "$MARKETPLACE_ROOT/.claude-plugin"
+cat > "$MARKETPLACE_ROOT/.claude-plugin/marketplace.json" << 'EOF'
 {
   "name": "claudisms",
   "owner": {
@@ -37,14 +47,14 @@ cat > "$MARKETPLACE_DIR/.claude-plugin/marketplace.json" << 'EOF'
   "plugins": [
     {
       "name": "claudisms",
-      "source": "./",
+      "source": "./claudisms",
       "description": "Operational guidelines: terse responses, sequential execution, no destructive ops without confirmation"
     }
   ]
 }
 EOF
 
-# 5. Update installed_plugins.json
+# 6. Update installed_plugins.json
 echo "✓ Updating installed_plugins.json..."
 cat > "$INSTALLED_PLUGINS" << EOF
 {
@@ -54,7 +64,7 @@ cat > "$INSTALLED_PLUGINS" << EOF
       "version": "2.2.0",
       "installedAt": "$(date -u +%Y-%m-%dT%H:%M:%S.000Z)",
       "lastUpdated": "$(date -u +%Y-%m-%dT%H:%M:%S.000Z)",
-      "installPath": "$MARKETPLACE_DIR/",
+      "installPath": "$PLUGIN_DIR/",
       "gitCommitSha": "$(cd "$SCRIPT_DIR" && git rev-parse HEAD 2>/dev/null || echo 'local')",
       "isLocal": true
     }
@@ -62,7 +72,7 @@ cat > "$INSTALLED_PLUGINS" << EOF
 }
 EOF
 
-# 6. Update known_marketplaces.json
+# 7. Update known_marketplaces.json
 echo "✓ Updating known_marketplaces.json..."
 cat > "$KNOWN_MARKETPLACES" << EOF
 {
@@ -71,33 +81,39 @@ cat > "$KNOWN_MARKETPLACES" << EOF
       "url": "https://github.com/jeffersonwarrior/claudisms.git",
       "ref": "main"
     },
-    "installLocation": "$MARKETPLACE_DIR",
+    "installLocation": "$MARKETPLACE_ROOT",
     "lastUpdated": "$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
   }
 }
 EOF
 
-# 7. Initialize settings if not exists
-if [[ ! -f "$MARKETPLACE_DIR/settings.json" ]]; then
+# 8. Initialize settings if not exists
+if [[ ! -f "$PLUGIN_DIR/settings.json" ]]; then
   echo "✓ Creating default settings.json..."
-  cp "$MARKETPLACE_DIR/settings.example.json" "$MARKETPLACE_DIR/settings.json"
+  cp "$PLUGIN_DIR/settings.example.json" "$PLUGIN_DIR/settings.json"
 fi
 
-# 8. Set permissions
-chmod +x "$MARKETPLACE_DIR"/bin/* 2>/dev/null || true
-chmod +x "$MARKETPLACE_DIR"/hooks-handlers/* 2>/dev/null || true
-chmod +x "$MARKETPLACE_DIR"/commands/*.sh 2>/dev/null || true
-chmod +x "$MARKETPLACE_DIR"/lib/*.sh 2>/dev/null || true
+# 9. Set permissions
+chmod +x "$PLUGIN_DIR"/bin/* 2>/dev/null || true
+chmod +x "$PLUGIN_DIR"/hooks-handlers/* 2>/dev/null || true
+chmod +x "$PLUGIN_DIR"/commands/*.sh 2>/dev/null || true
+chmod +x "$PLUGIN_DIR"/lib/*.sh 2>/dev/null || true
 
-# 9. Verify installation
+# 10. Verify installation
 echo ""
 echo "✅ Installation repaired!"
 echo ""
-echo "Location: $MARKETPLACE_DIR"
+echo "Marketplace: $MARKETPLACE_ROOT"
+echo "Plugin: $PLUGIN_DIR"
 echo "Plugin ID: claudisms@claudisms"
 echo ""
+echo "Structure:"
+echo "  ~/.claude/plugins/marketplaces/claudisms/"
+echo "    ├── .claude-plugin/marketplace.json"
+echo "    └── claudisms/ (plugin files)"
+echo ""
 echo "Files installed:"
-ls -lh "$MARKETPLACE_DIR" | tail -n +2 | wc -l | xargs echo "  Files:"
+ls -lh "$PLUGIN_DIR" | tail -n +2 | wc -l | xargs echo "  Files:"
 echo ""
 echo "⚠️  Restart Claude Code to load changes"
 echo ""
