@@ -3,7 +3,7 @@
 
 # Rule Groups (on|off|exclude)
 terse_mode=on
-doc_limits=on
+doc_limits=off
 destructive_guard=on
 sequential_only=on
 

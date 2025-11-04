@@ -41,7 +41,7 @@ validate_setting_value() {
 # Default settings (used when settings file is missing or incomplete)
 declare -A DEFAULT_SETTINGS
 DEFAULT_SETTINGS[terse_mode]="on"
-DEFAULT_SETTINGS[doc_limits]="on"
+DEFAULT_SETTINGS[doc_limits]="off"
 DEFAULT_SETTINGS[destructive_guard]="on"
 DEFAULT_SETTINGS[sequential_only]="on"
 DEFAULT_SETTINGS[tmp_location]="pwd"
