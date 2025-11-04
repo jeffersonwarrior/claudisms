@@ -65,14 +65,26 @@ EOF
 
 # Show current settings
 show_settings() {
-  if [[ ! -f "$SETTINGS_FILE" ]]; then
-    echo "No settings file found. Using defaults."
-    return
-  fi
-
   echo "Current Claudisms Settings:"
   echo "============================"
   echo ""
+
+  if [[ ! -f "$SETTINGS_FILE" ]]; then
+    echo "Settings file: ${SETTINGS_FILE}"
+    echo "Status: Not found (using defaults)"
+    echo ""
+    echo "Defaults:"
+    echo "  terse_mode         = on"
+    echo "  doc_limits         = on"
+    echo "  destructive_guard  = on"
+    echo "  sequential_only    = on"
+    echo "  tmp_location       = pwd"
+    echo "  debug_logging      = off"
+    echo "  excluded_files     = CLAUDE.md,claude.md"
+    echo ""
+    echo "Use '/claudisms-settings set <key> <value>' to create settings file"
+    return
+  fi
 
   # Read and display settings with descriptions
   while IFS='=' read -r key value; do
@@ -85,7 +97,7 @@ show_settings() {
     value=$(echo "$value" | xargs)
 
     # Display with formatting
-    printf "%-20s = %s\n" "$key" "$value"
+    printf "  %-20s = %s\n" "$key" "$value"
   done < "$SETTINGS_FILE"
 
   echo ""
