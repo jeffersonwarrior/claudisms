@@ -101,3 +101,5 @@ Current schema (v2.0.0+):
 - Current versions only
 - Use `fd` or `rg` (ripgrep) instead of `find` or `grep` when available
 - Recommend installation if `fd` or `rg` not available
+- **Time estimates:** Use operation complexity (simple/moderate/complex) not human time units
+- **Subagents:** Use Task tool for multi-file searches; write concise descriptive prompts
